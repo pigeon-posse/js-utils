@@ -1,0 +1,25 @@
+###############################################################################
+# DOCKER COMPOSE DOWN CONTAINER
+###############################################################################
+
+
+---
+
+
+- name: Down docker containers
+  become: yes
+  become_user: root
+  hosts: all
+  vars_files:
+    - ../variables.yml
+  tasks:
+
+    - name: "Down docker-compose: {{ file_name }}"
+      docker_compose:
+        project_src: "{{ docker_compose_dir }}"
+        files:
+          - "{{ file_name }}.yml"
+        state: absent
+
+
+###############################################################################

@@ -1,0 +1,13 @@
+###############################################################################
+# FOR PIGEONPOSSE WEB/S
+###############################################################################
+
+web:
+  
+  - {{pp_template_name}}:
+    type: wp-plugin
+    version: {{package.version}}
+    description: {{composer.description}}
+    name: {{composer.extra.name}}
+    logo: "https://github.com/pigeonposse/{{pp_template_name}}/blob/main/docs/logo.png"
+    banner: "https://github.com/pigeonposse/{{pp_template_name}}/blob/main/docs/banner.png"

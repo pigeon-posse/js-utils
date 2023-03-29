@@ -1,0 +1,45 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+build
+*.local
+**/node_modules
+**/dist
+
+# PROJECT
+.env
+.ff3.env
+**/.env
+**/.ff3.env
+src/ansible/docker/compose/.env
+src/ansible/compose/.ff3.env
+
+hosts.yml
+variables.yml
+**/hosts.yml
+**/variables.yml
+src/ansible/hosts.yml
+src/ansible/variables.yml
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# misc
+.DS_Store

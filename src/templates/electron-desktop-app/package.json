@@ -1,0 +1,121 @@
+{
+	"private": true,
+	"name": "{{pp_template_name}}",
+	"version": "1.0.0",
+	"description": "{{pp_template_description}}",
+	"main": "dist/build/electron/index.js",
+	"engines": {
+		"node": "^12.17.0 || ^14.13 || >=16.0.0",
+		"pnpm": ">=3"
+	},
+	"packageManager": "pnpm@7.26.0",
+	"scripts": {
+		"update": "pnpm up",
+		"dev": "vite",
+		"dist": "vite build",
+		"release": "node .utils/release.mjs",
+		"build": "pnpm dist && pnpm run build:release",
+		"build:release": "electron-builder --mac",
+		"lint": "run-p lint:*",
+		"lint:js": "eslint . --ext .js",
+		"lint:scss": "stylelint **/*.scss",
+		"lint:html": "pigeon-htmlhint src/**/*.html",
+		"lint-fix": "run-p lint-fix:*",
+		"lint-fix:js": "pnpm lint:scss --fix",
+		"lint-fix:scss": "stylelint **/*.scss --fix"
+	},
+	"keywords": [
+		"copycat",
+		"macos",
+		"js",
+		"electron",
+		"applescript"
+	],
+	"browserslist": [
+		"defaults"
+	],
+	"devDependencies": {
+		"@pigeon-posse/eslint-config": "^1.0.1",
+		"@pigeon-posse/htmlhint-config": "^1.1.3",
+		"@pigeon-posse/stylelint-config": "^1.0.1",
+		"auto-changelog": "^2.4.0",
+		"browserlist": "^1.0.1",
+		"electron": "^20.3.12",
+		"electron-builder": "^23.6.0",
+		"eslint": "^8.35.0",
+		"eslint-plugin-align-assignments": "^1.1.2",
+		"eslint-plugin-align-import": "^1.0.0",
+		"eslint-plugin-html": "^7.1.0",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-jsdoc": "^39.9.1",
+		"eslint-plugin-json": "^3.1.0",
+		"eslint-plugin-promise": "^6.1.1",
+		"htmlhint": "^1.1.4",
+		"npm-run-all": "^4.1.5",
+		"release-it": "^15.8.0",
+		"rimraf": "^4.4.0",
+		"sass": "^1.58.3",
+		"stylelint": "^15.2.0",
+		"vite": "^3.2.5",
+		"vite-plugin-electron": "^0.9.3"
+	},
+	"author": {
+		"name": "{{pp_author}}",
+		"email": "{{pp_author_mail}}",
+		"url": "{{pp_author_url}}"
+	},
+	"license": {
+		"type": "GPL-3.0",
+		"url": "https://github.com/pigeonposse/{{pp_template_name}}/LICENSE"
+	},
+	"contributors": [
+		{
+			"name": "{{pp_author}}",
+			"email": "{{pp_author_mail}}",
+			"url": "{{pp_author_url}}"
+		}
+	],
+	"bugs": {
+		"url": "https://github.com/pigeonposse/{{pp_template_name}}/issues",
+		"email": "dev@pigeonposse.com"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://pigeonposse.com/?popup=donate"
+	},
+	"homepage": "https://pigeonposse.gumroad.com/l/{{pp_template_name}}",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pigeonposse/{{pp_template_name}}"
+	},
+	"custom": {
+		"collective": {
+			"name": "Pigeon Posse",
+			"email": "dev@pigeonposse.com",
+			"url": "http://pigeonposse.com/"
+		},
+		"projectPath": {
+			"source": {
+				"electron": "src/electron",
+				"electronToProject": "../../",
+				"pages": "src/pages",
+				"pagesToProject": "../../",
+				"assets": "src/assets",
+				"assetsToProject": "../../",
+				"images": "src/assets/images"
+			},
+			"dist": {
+				"own": "dist",
+				"ownToProject": "../",
+				"build": "dist/build",
+				"buildToProject": "../../",
+				"electron": "dist/build/electron",
+				"electronToProject": "../../../",
+				"pages": "dist/build/pages",
+				"pagesToProject": "../../../",
+				"release": "dist/release",
+				"resourcesSubFolder": "assets"
+			}
+		}
+	}
+}

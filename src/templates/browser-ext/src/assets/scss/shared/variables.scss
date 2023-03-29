@@ -1,0 +1,71 @@
+/**
+ * VARIABLES SCSS
+ *
+ * since 1.0.0
+ */
+
+/* MAIN */
+$prefix : 'pp-s8-';
+$main-color : var(--pp-ext-main-color);
+$message-color:  var(--pp-ext-message-color);
+$success-color: var(--pp-ext-success-color);
+$error-color: var(--pp-ext-error-color);
+
+/* BG */
+$bg-color : var(--pp-ext-bg-color);
+$bg-color-2 : var(--pp-ext-bg-color-2);
+$bg-color-3 : var(--pp-ext-bg-color-3);
+
+/* TEXT */
+$text-color : var(--pp-ext-text-color);
+
+/* BORDER */
+$border : var(--pp-ext-border);
+$border-color : var(--pp-ext-border-color);
+
+/* RADIUS */
+$radius : var(--pp-ext-radius);
+$circle : var(--pp-ext-circle);
+
+/* SHADOW */
+$text-shadow : var(--pp-ext-text-shadow);
+$shadow : var(--pp-ext-shadow);
+$btn-shadow : var(--pp-ext-btn-shadow);
+$btn-shadow-2 : var(--pp-ext-btn-shadow-2);
+$popup-shadow  : var(--pp-ext-popup-shadow);
+
+/* BTNS */
+$btn-bg-color : var(--pp-ext-btn-bg-color);
+$btn-bg-color-2 : var(--pp-ext-btn-bg-color-2);
+$btn-text-color : var(--pp-ext-btn-text-color);
+$btn-text-color-2 : var(--pp-ext-btn-text-color-2);
+
+/* INPUTS */
+$input-color : var(--pp-ext-input-color);
+$input-colorFF-hover : var(--pp-ext-input-color-hover);
+
+body {
+    --pp-ext-main-color: #5d59ce;
+    --pp-ext-message-color: #3f8cce;
+    --pp-ext-success-color: #359960;
+    --pp-ext-error-color: #b93440;
+    --pp-ext-bg-color: #1a1919;
+    --pp-ext-bg-color-2: #141414; //#212121eb;
+    --pp-ext-bg-color-3: #68686833;
+    --pp-ext-text-color: #fff;
+    --pp-ext-border: 1px solid #5d59ceb8;
+    --pp-ext-border-color: #5d59ceb8;
+    --pp-ext-radius: 20px;
+    --pp-ext-circle: 100%;
+    --pp-ext-text-shadow: 0 10px #0000001a;
+    --pp-ext-shadow: 0 0 25px 10px #0000001a;
+    --pp-ext-btn-shadow: 0 0 10px 0 #ffffff91;
+    --pp-ext-btn-shadow-2: 0 0 10px 0 #5d59ce6b;
+    --pp-ext-popup-shadow: 0 0 50px 50px #00000054;
+    --pp-ext-btn-bg-color: #fff;
+    --pp-ext-btn-bg-color-2: #c9c9c966;
+    --pp-ext-btn-text-color: #1a1919;
+    --pp-ext-btn-text-color-2: #fff;
+    --pp-ext-input-color: #eee;
+    --pp-ext-input-color-hover: #ccc;
+}

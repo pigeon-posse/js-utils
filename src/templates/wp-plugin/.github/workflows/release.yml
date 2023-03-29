@@ -1,0 +1,100 @@
+###############################################################################
+# RELEASE
+###############################################################################
+
+name: Publish
+
+
+###############################################################################
+# ON
+###############################################################################
+
+on:
+  push:
+    tags:
+      - '*'
+
+
+###############################################################################
+# JOBS
+###############################################################################
+
+jobs:
+
+  build:
+
+    name: Release in GitHub
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: write
+
+    ###########################################################################
+    # STEPS
+    ###########################################################################
+
+    steps:
+
+      #########################################################################
+      # INIT
+      #########################################################################
+      - name: checks-out repository
+        uses: actions/checkout@v3
+
+      # PHP
+      - name: Install php
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "latest"
+      
+      # COMPOSER
+      - name: Install composer
+        uses: "ramsey/composer-install@v2"
+        with:
+          composer-options: "--ignore-platform-reqs --optimize-autoloader"
+
+      # PNPM
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+
+      #########################################################################
+      # IF IS IN MAIN BRANCH
+      #########################################################################
+
+      # - name: Exit if not on MAIN branch
+      #   if: endsWith(github.ref, 'main') == false
+      #   run: exit -1
+
+      #########################################################################
+      # BUILD PKG
+      #########################################################################
+
+      - name: Install PKG dependencies
+        run: |
+          pnpm i
+          pnpm build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      #########################################################################
+      # GET PKG INFO
+      #########################################################################
+
+      - name: Get PKG info
+        id: package
+        uses: codex-team/action-nodejs-package-info@v1.1
+
+      #########################################################################
+      # GITHUB RELEASE
+      #########################################################################
+
+      - name: Create Github release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/{{pp_template_name}}.zip"
+          body: |
+            ℹ️ CHANGELOG: https://github.com/pigeonposse/{{pp_template_name}}/blob/main/CHANGELOG.md
+            📜 LICENSE: https://github.com/pigeonposse/{{pp_template_name}}/blob/main/LICENSE
+
+
+############################################################################### 

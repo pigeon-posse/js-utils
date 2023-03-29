@@ -1,0 +1,16 @@
+{
+    "bin" : "dist/build/bundle.cjs",
+    "name": "{{pp_template_name}}",
+    "pkg": {
+        "assets": [
+            "package.json"
+        ],
+        "outputPath": "dist/execs",
+        "compress" : "Gzip",
+        "targets" : [
+            "node18-linux-x64",
+            "node18-macos-x64", 
+            "node18-win-x64"
+        ]
+    }
+}

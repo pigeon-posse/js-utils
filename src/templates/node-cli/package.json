@@ -1,0 +1,104 @@
+{
+	"name": "{{pp_template_name}}",
+	"version": "1.0.0",
+	"description": "{{pp_template_description}}",
+	"type": "module",
+	"main": "dist/build/bundle.cjs",
+	"module": "dist/build/bundle.js",
+	"bin": {
+		"{{pp_template_cli_name}}": "dist/build/bundle.js"
+	},
+	"engines": {
+		"node": "^12.17.0 || ^14.13 || >=16.0.0",
+		"pnpm": ">=3"
+	},
+	"packageManager": "pnpm@7.26.0",
+	"scripts": {
+		"start": "pnpm i",
+		"updates": "pnpm up",
+		"scripts": "pnpm pes",
+		"build": "pnpm pes build",
+		"dev": "node --experimental-modules --es-module-specifier-resolution=node src/main.js $@",
+		"test": "node .utils/test-build.js $@",
+		"release": "node .utils/release-it.js && node .utils/release.js"
+	},
+	"extra": {
+		"projectPath": {
+			"src": {
+				"entry": "src/main.js"
+			},
+			"dist": {
+				"build": "dist/build",
+				"execs": "dist/execs",
+				"zip": "dist/zip"
+			}
+		}
+	},
+	"devDependencies": {
+		"@babel/core": "^7.20.5",
+		"@babel/eslint-parser": "^7.19.1",
+		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
+		"@babel/preset-env": "^7.20.2",
+		"@pigeon-posse/eslint-config": "^1.0.1",
+		"@pigeon-posse/pkg-extended-scripts": "^0.2.0",
+		"@release-it/bumper": "^4.0.2",
+		"archiver": "^5.3.1",
+		"auto-changelog": "^2.4.0",
+		"babel-plugin-transform-import-meta": "^2.2.0",
+		"esbuild": "^0.16.12",
+		"esbuild-plugin-babel": "^0.2.3",
+		"eslint": ">= 8",
+		"eslint-plugin-align-assignments": ">= 1",
+		"eslint-plugin-align-import": "^1.0.0",
+		"eslint-plugin-html": "^7.1.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jsdoc": "^39.3.6",
+		"eslint-plugin-json": "^3.1.0",
+		"eslint-plugin-promise": ">= 6",
+		"inquirer": "^9.1.5",
+		"pkg": "^5.8.0",
+		"release-it": "^15.9.3",
+		"rimraf": "^4.4.1"
+	},
+	"dependencies": {
+		"chalk": "^5.0.1",
+		"js-yaml": "^4.1.0"
+	},
+	"keywords": [
+		"scripts",
+		"npm",
+		"cli",
+		"terminal",
+		"pkg",
+		"pigeonposse"
+	],
+	"author": {
+		"name": "{{pp_author}}",
+		"email": "{{pp_author_mail}}",
+		"url": "{{pp_author_url}}"
+	},
+	"license": {
+		"type": "GPL-3.0",
+		"url": "https://github.com/pigeonposse/{{pp_template_name}}/LICENSE"
+	},
+	"contributors": [
+		{
+			"name": "{{pp_author}}",
+			"email": "{{pp_author_mail}}",
+			"url": "{{pp_author_url}}"
+		}
+	],
+	"bugs": {
+		"url": "https://github.com/pigeonposse/{{pp_template_name}}/issues",
+		"email": "dev@pigeonposse.com"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://pigeonposse.com/?popup=donate"
+	},
+	"homepage": "https://pigeonposse.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pigeonposse/{{pp_template_name}}"
+	}
+}

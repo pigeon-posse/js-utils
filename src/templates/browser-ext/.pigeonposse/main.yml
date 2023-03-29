@@ -1,0 +1,13 @@
+###############################################################################
+# FOR PIGEONPOSSE WEB/S
+###############################################################################
+
+web:
+  
+  - {{pp_template_name}}:
+    type: browser-ext
+    version: {{package.version}}
+    description: {{package.description}}
+    name: {{package.extra.name}}
+    logo: "https://github.com/pigeonposse/{{package.extra.name}}/blob/main/docs/logo.png"
+    banner: "https://github.com/pigeonposse/{{package.extra.name}}/blob/main/docs/banner.png"

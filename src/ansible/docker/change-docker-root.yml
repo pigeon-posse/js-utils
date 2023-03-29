@@ -1,0 +1,69 @@
+###############################################################################
+# Change docker root directory 
+###############################################################################
+# 
+# Use: when you want to store the containers and images on an external hard drive
+###############################################################################
+
+
+---
+
+- name: "Change docker root directory"
+  hosts: all
+  become: true
+  vars_files:
+    - ../variables.yml
+  vars:
+    dockerDaemonFile:
+      graph: "{{docker_daemon_path}}"
+      storage-driver: "overlay2"
+  tasks:
+
+    - name: "Check if folder [{{docker_daemon_old_path}}] exists"
+      stat:
+        path: "{{ docker_daemon_old_path }}"
+      register: check_old_path
+
+    - name: "Stop service docker"
+      service:
+         name: docker
+         state: stopped
+      when: check_old_path.stat.exists
+
+    - name: "Check if exist directory: {{docker_daemon_path}}"
+      file:
+        path: "{{docker_daemon_path}}"
+        state: directory
+      when: check_old_path.stat.exists
+
+    - name: "Change /etc/docker/daemon.json"
+      copy:
+        dest: /etc/docker/daemon.json
+        content: "{{ dockerDaemonFile | to_json }}"
+      #when: check_old_path.stat.exists
+
+    - name: "Move docker content to {{ docker_daemon_old_path }} to {{ docker_daemon_path }}"
+      command: "rsync -aqxP {{docker_daemon_old_path}}/ {{docker_daemon_path}}"
+      when: check_old_path.stat.exists
+
+    - name: "Remove content from old path"
+      file:
+        path: "{{ docker_daemon_old_path }}"
+        state: absent
+      when: check_old_path.stat.exists
+
+    # - name: "Check if folder [{{docker_daemon_path}}] exists"
+    #   stat:
+    #     path: "{{ docker_daemon_path }}"
+    #   register: check_path
+
+    - name: "Start Docker service"
+      service:
+         name: docker
+         state: started
+
+    - name: "Exec info from docker"
+      shell: "docker info | grep 'Docker Root'"
+
+
+##############################################################################

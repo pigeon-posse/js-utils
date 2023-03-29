@@ -1,0 +1,59 @@
+###############################################################################
+# WIREGUARD
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/r/weejewel/wg-easy
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # WG-EASY
+  #############################################################################
+  
+  wg-easy:
+    image: weejewel/wg-easy:${WG_VERSION:-latest}
+    container_name: wg-easy
+    restart: always
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    ports:
+      - ${WG_PORT:-51820}:51820/udp
+      - ${WGUI_PORT:-51821}:51821/tcp
+    volumes:
+      - $VOLUMES_DIR/${WG_VOL_NAME:-wg-easy}/config:/etc/wireguard
+    environment:
+      - WG_HOST=$WG_HOST
+      - WG_PORT=${WG_PORT:-51820}
+      - PASSWORD=$WGUI_PASS
+      - WG_PORT=$WG_PORT
+      - WG_DEFAULT_ADDRESS=$WG_SUBNET
+      - WG_DEFAULT_DNS=$WG_DEFAULT_DNS
+      - WG_ALLOWED_IPS=$WG_ALLOWEDIPS
+    networks:
+      - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    name: private_net
+    external: true
+
+
+###############################################################################

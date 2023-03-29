@@ -1,0 +1,13 @@
+###############################################################################
+# FOR PIGEONPOSSE WEB/S
+###############################################################################
+
+web:
+  
+  - {{pp_template_name}}:
+    type: cli
+    version: {{package.version}}
+    description: {{package.description}}
+    name: {{package.name}}
+    logo: "https://github.com/pigeonposse/{{package.name}}/blob/main/docs/logo.png"
+    banner: "https://github.com/pigeonposse/{{package.name}}/blob/main/docs/banner.png"

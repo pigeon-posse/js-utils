@@ -1,0 +1,50 @@
+###############################################################################
+# SPEEDTEST
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/r/henrywhitaker3/speedtest-tracker
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  speedtest:
+    container_name: speedtest
+    image: henrywhitaker3/speedtest-tracker:${SPEEDTEST_VERSION:-latest}
+    ports:
+      - ${SPEEDTEST_PORT:-8765}:80
+    volumes:
+      - $VOLUMES_DIR/${SPEEDTEST_VOL_NAME:-speedtest}/config:/config
+    environment:
+      - TZ=$TIME_ZONE
+      - PGID=$PGID
+      - PUID=$PUID
+      - OOKLA_EULA_GDPR=true
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200k"
+    restart: always
+    networks:
+      - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    name: private_net
+    external: true
+
+
+###############################################################################

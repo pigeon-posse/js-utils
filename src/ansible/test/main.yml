@@ -1,0 +1,19 @@
+###############################################################################
+# Test for all Ansible host 
+###############################################################################
+
+---
+
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: "Test connection ping/pong"
+      ansible.builtin.ping:
+
+    - name: Execute echo for "Hello world"
+      shell: echo 'Hello Pigeon 🐦🌈'
+
+
+###############################################################################

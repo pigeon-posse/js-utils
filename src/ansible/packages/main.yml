@@ -1,0 +1,24 @@
+###############################################################################
+# Install packages in your OS
+###############################################################################
+
+
+---
+
+
+- name: Install packages
+  hosts: all
+  become: true
+  vars_files:
+    - ../variables.yml
+  tasks:
+
+    - name: Install pkgs {{ extra_pkgs }}
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop: "{{ extra_pkgs }}"
+
+
+###############################################################################

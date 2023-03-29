@@ -1,0 +1,61 @@
+###############################################################################
+# ADD BASH ALIAS 
+###############################################################################
+
+
+---
+
+- name: "Add Aliasses in a users home directory"
+  become: yes
+  vars_files:
+    - ../variables.yml
+  hosts: all
+  tasks:
+
+    ## Get users Home dirs
+    - name: "Get home path from users {{ ansible_users }}"
+      ansible.builtin.shell: "eval echo ~{{ item }}"
+      register: home_dirs
+      ignore_errors: true
+      with_items: "{{ ansible_users }}"
+    
+    # Execute .bash_aliases
+    - name: "Copy .bash_aliases file if does not exists"
+      copy:
+        src: .bash_aliases
+        dest: "{{ item.stdout }}"
+        owner: "{{ item.item }}"
+        group: "{{ item.item }}"
+        force: false
+      with_items: "{{ home_dirs.results }}"
+
+    # - name:
+    #   ansible.builtin.file:
+    #     path: /etc/foo.conf
+    #     owner: "{{ ansible_users }}"
+    #     group: "{{ ansible_users }}"
+    #     mode: '0644'
+    #     with_items: "{{ ansible_users }}"
+
+    ## Sync .bash_fixed_aliases
+    - name: "Sync fixed aliases to users {{ ansible_users }}"
+      ansible.posix.synchronize:
+        src: .bash_fixed_aliases
+        dest: "{{ item.stdout }}"
+      with_items: "{{ home_dirs.results }}"
+
+    - name: "Call .bash_fixed_aliases in .bashrc"
+      blockinfile:
+        path: "{{ item.stdout }}/.bashrc"
+        marker: "############### {mark} PIGEONPOSSE™ ###############"
+        block: |
+          [ -f ~/.bash_fixed_aliases ] && . ~/.bash_fixed_aliases
+      with_items: "{{ home_dirs.results }}"
+
+    ## source .bashrc
+    - name: "Source .bashrc users {{ ansible_users }}"  
+      shell: ". {{ item.stdout }}/.bashrc"
+      with_items: "{{ home_dirs.results }}"
+
+
+###############################################################################

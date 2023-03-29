@@ -1,0 +1,71 @@
+###############################################################################
+# Install docker in a Ansible host 
+###############################################################################
+
+
+---
+
+- name: Install Docker and Docker Compose
+  hosts: all
+  become: true
+  vars_files:
+    - ../variables.yml
+  tasks:
+
+    - name: Install dependencies
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+
+    - name: Add gdg
+      apt_key:
+        url: https://download.docker.com/{{os}}/gpg
+        state: present
+
+    - name: Add docker release
+      apt_repository:
+        repo: deb https://download.docker.com/{{os}} {{dist}} stable
+        state: present
+
+    - name: install Docker
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Active Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Docker Compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/{{docker_compose_version}}/docker-compose-{{arch}}
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
+
+     # Installs Docker SDK
+    - name: Install python package manager
+      apt:
+        name: python3-pip
+
+    - name: Install python sdk
+      pip:
+        name:
+          - docker
+          - docker-compose
+
+
+###############################################################################

@@ -1,0 +1,49 @@
+###############################################################################
+# PAPERMERGE WITH DOCKER
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/r/linuxserver/papermerge
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # papermerge
+  #############################################################################
+  
+  paperm:
+    container_name: papermerge
+    image: lscr.io/linuxserver/papermerge:${PAPERMERGE_VERSION:-latest}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TIME_ZONE}
+    volumes:
+      - $VOLUMES_DIR/${PAPERMERGE_VOL_NAME:-papermerge}/config:/config
+      - $VOLUMES_DIR/${PAPERMERGE_VOL_NAME:-papermerge}/data:/data
+    ports:
+      - ${PAPERMERGE_PORT:-5800}:8000
+    restart: always 
+    networks:
+      local_net:
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  local_net:
+    name: private_net
+    external: true
+
+
+###############################################################################

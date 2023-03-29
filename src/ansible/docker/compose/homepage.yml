@@ -1,0 +1,50 @@
+###############################################################################
+# HOMEPAGE DOCKER
+###############################################################################
+#
+# Docs:         https://gethomepage.dev/en/installation/docker/
+# Compose docs: https://docs.docker.com/compose/compose-file
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+
+  #############################################################################
+  # homepage
+  #############################################################################
+
+  homepage:
+    image: ghcr.io/benphelps/homepage:${HOMEPAGE_VERSION:-latest}
+    container_name: homepage
+    ports:
+      - ${HOMEPAGE_PORT:-3000}:3000
+    volumes:
+      # Make sure your local config directory exists
+      - $VOLUMES_DIR/${HOMEPAGE_VOL_NAME:-homepage}/config:/app/config
+      - $VOLUMES_DIR/${HOMEPAGE_VOL_NAME:-homepage}/images:/app/public/images
+      # (optional) For docker integrations
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+    networks:
+      - private_net
+      
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+    
+    
+###############################################################################  

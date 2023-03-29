@@ -1,0 +1,25 @@
+###############################################################################
+# RUN DOCKER CONTAINERS LISTED IN FILE ./run/.dockerfunct.sh
+###############################################################################
+
+
+---
+
+- name: RUN DOCKER CONTAINERS LISTED IN FILE ./run/.dockerfunc.sh
+  become: yes
+  become_user: root
+  hosts: all
+  vars_files:
+    - ../variables.yml
+  tasks:
+    - name: Find out playbooks path
+      shell: pwd
+      register: playbook_dir
+      
+    - debug: var=playbook_dir.stdout
+
+    - name: "Run docker container '{{ container_name }}' in {{playbook_dir}}/run/.dockerfunc.sh"  
+      shell: "bash {{playbook_dir}}/run/.dockerfunc.sh {{ container_name }}"
+
+
+###############################################################################

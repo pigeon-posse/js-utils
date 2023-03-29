@@ -1,0 +1,39 @@
+###############################################################################
+# DEPLOY CONTAINERS WITH DOCKER COMPOSE
+###############################################################################
+
+
+---
+
+- name:  Deploy apps with Docker Compose
+  become: yes
+  become_user: root
+  hosts: all
+  vars_files:
+    - ../variables.yml
+  tasks:
+
+    - name: "Check if exist volumes directory : {{docker_volumes_dir}}"
+      file:
+        path: "{{docker_volumes_dir}}"
+        state: directory
+
+    - name: "Check if exist compose directory : {{docker_compose_dir}}"
+      file:
+        path: "{{docker_compose_dir}}"
+        state: directory
+
+    - name: "Sync docker compose files in folder {{ docker_compose_dir }}"
+      ansible.posix.synchronize:
+        src: compose/
+        dest: "{{ docker_compose_dir }}"
+
+    - name: "Up docker-compose: {{ file_name }}"
+      docker_compose:
+        project_src: "{{ docker_compose_dir }}"
+        files:
+          - "{{ file_name }}.yml"
+        state: present
+
+
+###############################################################################

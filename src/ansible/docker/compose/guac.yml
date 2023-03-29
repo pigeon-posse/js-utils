@@ -1,0 +1,94 @@
+###############################################################################
+# GUACAMOLE
+###############################################################################
+# - GUAC DATABASE
+# - GUAC native server-side proxy 
+# - GUAC APP
+# 
+# Docker hub:   https://hub.docker.com/r/guacamole/guacamole
+# Compose docs: https://docs.docker.com/compose/compose-file/compose-file-v3/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  ###########################################
+  # GUAC DATABASE
+  ###########################################
+
+  guacdb:
+    container_name: guac_db
+    image: mariadb/server:${GUAC_DB_VERSION:-latest}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '${GUAC_DB_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${GUAC_DB_NAME}'
+      MYSQL_USER: '${GUAC_DB_USER}'
+      MYSQL_PASSWORD: '${GUAC_DB_PASSWORD}'
+    volumes:
+      - $VOLUMES_DIR/${GUAC_VOL_NAME:-guac}/data:/var/lib/mysql
+    networks:
+      - guac_db_net
+      - private_db_net
+
+  ###########################################
+  # GUAC native server-side proxy 
+  ###########################################
+
+  guacd:
+    container_name: guacd
+    image: guacamole/guacd:${GUACD_VERSION:-latest}
+    restart: always
+    volumes:
+      - $VOLUMES_DIR/${GUAC_VOL_NAME:-guac}/drive:/drive:rw
+      - $VOLUMES_DIR/${GUAC_VOL_NAME:-guac}/record:/record:rw
+    networks:
+      private_net
+
+  ###########################################
+  # GUACAMOLE
+  ###########################################
+  guacamole:
+    container_name: guac_app
+    image: guacamole/guacamole:${GUAC_VERSION:-latest}
+    restart: always
+    ports:
+      - '${GUAC_PORT:-8771}:8080'
+    environment:
+      GUACD_HOSTNAME: "guacd"
+      MYSQL_HOSTNAME: "db"
+      MYSQL_DATABASE: '${GUAC_DB_NAME}'
+      MYSQL_USER: '${GUAC_DB_USER}'
+      MYSQL_PASSWORD: '${GUAC_DB_PASSWORD}'
+    links:
+      - guacdb:db
+      - guacd
+    depends_on:
+      - guacdb
+      - guacd
+    networks:
+      - private_net
+      - guac_db_net
+  
+  
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+  private_db_net:
+    external: true
+  guac_db_net:
+    driver: bridge
+    name: guac_db_net
+
+
+###############################################################################

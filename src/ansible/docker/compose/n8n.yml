@@ -1,0 +1,97 @@
+###############################################################################
+# N8N FOR AUTOMATIONS
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/r/n8nio/n8n
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # N8N DATABASE
+  #############################################################################
+
+  n8n_db:
+    image: lscr.io/linuxserver/mariadb:${N8N_DB_VERSION:-latest}
+    container_name: n8n_db
+    restart: always
+    #ports:
+    #  - 3306:3306
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIME_ZONE}
+      - MYSQL_ROOT_PASSWORD=${N8N_DB_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${N8N_DB_PASSWORD} 
+      - MYSQL_DATABASE=${N8N_DB_DATABASE_NAME}
+      - MYSQL_USER=${N8N_DB_USER} 
+    volumes:
+      - $VOLUMES_DIR/${N8N_VOL_NAME:-n8n}/db:/config
+    networks:
+      - n8n_db_net
+      - private_db_net
+    
+
+  #############################################################################
+  # N8N
+  #############################################################################
+
+  n8n:
+    image: n8nio/n8n:${N8N_VERSION:-latest}
+    container_name: n8n
+    restart: always
+    depends_on:
+      - n8n_db
+    links:
+      - n8n_db:db
+    ports:
+      - ${N8N_PORT:-5678}:5678
+    environment:
+      - GENERIC_TIMEZONE=${TIME_ZONE}
+      - TZ=${TIME_ZONE}
+      #- N8N_BASIC_AUTH_ACTIVE=true
+      #- N8N_BASIC_AUTH_USER=admin
+      #- N8N_BASIC_AUTH_PASSWORD=admin
+      #- NODE_ENV=production
+      #- N8N_HOST=example.com
+      #- N8N_PROTOCOL=https
+      #- N8N_PORT="443"
+      #- WEBHOOK_TUNNEL_URL=""
+      # Database
+      - DB_TYPE=mysqldb
+      - DB_MYSQLDB_HOST=db
+      - DB_MYSQLDB_PORT=3306
+      - DB_MYSQLDB_DATABASE=${N8N_DB_DATABASE_NAME}
+      - DB_MYSQLDB_USER=${N8N_DB_USER} 
+      - DB_MYSQLDB_PASSWORD=${N8N_DB_PASSWORD} 
+    volumes:
+      - $VOLUMES_DIR/${N8N_VOL_NAME:-n8n}/.n8n:/home/node/.n8n
+      - $VOLUMES_DIR/${N8N_VOL_NAME:-n8n}/files:/files
+    networks:
+      - private_net
+      - n8n_db_net
+      
+      
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+  n8n_db_net:
+    driver: bridge
+    name: n8n_db_net
+  private_db_net:
+    external: true
+    
+    
+################################################################################  

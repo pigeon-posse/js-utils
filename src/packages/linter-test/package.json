@@ -1,0 +1,47 @@
+{
+	"name": "@pigeonposse/linter-tests",
+	"version": "1.0.0",
+	"description": "PigeonPosse linter tests",
+	"main": "index.js",
+	"scripts": {
+		"test": "pigeon-htmlhint *.html"
+	},
+	"devDependencies": {
+		"@pigeon-posse/htmlhint-config": "^1.1.3",
+		"@pigeon-posse/eslint-config": "^1.0.1",
+		"@pigeon-posse/stylelint-config": "^1.0.1",
+		"eslint": ">= 8",
+		"eslint-plugin-align-assignments": ">= 1",
+		"eslint-plugin-align-import": ">= 1",
+		"eslint-plugin-html": "^7.1.0",
+		"eslint-plugin-promise": ">= 6",
+		"stylelint": "^14.10.0"
+	},
+	"keywords": [
+		"linter",
+		"config",
+		"test",
+		"pigeonposse"
+	],
+	"author": {
+		"name": "Angelo",
+		"email": "angelo@pigeonposse.com",
+		"url": "https://pigeonposse.com"
+	},
+	"license": {
+		"type": "GPL-3.0",
+		"url": "https://github.com/pigeonposse/pigeon-dev/src/packages/stylelint/LICENSE"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://pigeonposse.com/?popup=donate"
+	},
+	"homepage": "https://github.com/PigeonPosse/pigeon-dev/src/packages/stylelint",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PigeonPosse/pigeon-dev/src/packages/stylelint"
+	},
+	"bugs": {
+		"url": "https://github.com/PigeonPosse/pigeon-dev/issues"
+	}
+}

@@ -1,0 +1,40 @@
+###############################################################################
+# CLOUDFLARE ACCESS
+###############################################################################
+#
+# docker hub:   https://hub.docker.com/r/oznu/cloudflare-ddns/
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services: 
+
+  cloudflare_ddns:
+      image: oznu/cloudflare-ddns:${CLOUDFLARE_VERSION:-latest}
+      container_name: cloudflare-ddns
+      restart: always
+      environment:
+         - API_KEY=$CLOUDFLARE_API_KEY
+         - ZONE=$CLOUDFLARE_ZONE
+         - SUBDOMAIN=$CLOUDFLARE_SUBDOMAIN
+         - proxied=$CLOUDFLARE_PROXIED 
+      networks:
+        - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+    
+
+###############################################################################

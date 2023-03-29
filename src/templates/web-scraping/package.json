@@ -1,0 +1,61 @@
+{
+    "name": "{{pp_template_name}}",
+    "description": "{{pp_template_description}}",
+    "version": "1.0.0",
+    "main": "src/main.js",
+    "type": "module",
+    "scripts": {
+        "test": "node src/main.js",
+        "lint": "concurrently \"npm:lint:*(!fix)\"",
+        "lint:js": "eslint . --ext .js",
+        "lint:fix": "concurrently \"npm:lint:fix:*\"",
+        "lint:fix:js": "eslint . --ext .js"
+    },
+    "browserslist": [
+        "defaults"
+    ],
+    "dependencies": {
+        "puppeteer": "^19.4.1"
+    },
+    "devDependencies": {
+        "@pigeon-posse/eslint-config": "^1.0.1",
+        "concurrently": "^7.6.0",
+        "inquirer": "^9.1.4",
+        "eslint": "^8.29.0",
+        "eslint-plugin-align-assignments": "^1.1.2",
+        "eslint-plugin-align-import": "^1.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jsdoc": "^39.6.4",
+        "eslint-plugin-json": "^3.1.0",
+        "eslint-plugin-promise": "^6.1.1",
+        "rimraf": "^3.0.2"
+    },
+	"author": {
+		"name": "{{pp_author}}",
+		"email": "{{pp_author_mail}}",
+		"url": "{{pp_author_url}}"
+	},
+    "license": {
+        "type": "GPL-3.0",
+        "url": "https://github.com/PigeonPosse/{{pp_template_name}}/blob/master/LICENSE"
+    },
+    "funding": {
+        "type": "individual",
+        "url": "https://pigeonposse.com/?popup=donate"
+    },
+    "homepage": "https://pigeonjs.pigeonposse.com/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/PigeonPosse/{{pp_template_name}}"
+    },
+    "bugs": {
+        "url": "https://github.com/PigeonPosse/{{pp_template_name}}/issues",
+        "email": "dev@pigeonposse.com"
+    },
+    "keywords": [
+        "js-library",
+        "frontend",
+        "pop-ups",
+        "full-paged"
+    ]
+}

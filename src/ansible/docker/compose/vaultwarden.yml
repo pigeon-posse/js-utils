@@ -1,0 +1,40 @@
+###############################################################################
+# WIREGUARD
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/r/weejewel/wg-easy
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  vaultwarden:
+    image: vaultwarden/server:${VAULTWARDEN_VERSION:-latest}
+    container_name: vaultwarden
+    volumes:
+      - $VOLUMES_DIR/${VAULTWARDEN_VOL_NAME:-vaultwarden}/data:/data/
+    ports:
+      - ${VAULTWARDEN_PORT:-8220}:80
+    restart: always
+    networks:
+      - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    name: private_net
+    external: true
+
+
+###############################################################################

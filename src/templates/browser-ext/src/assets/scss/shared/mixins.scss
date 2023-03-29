@@ -1,0 +1,93 @@
+@mixin keyframe($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-o-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
+}
+@mixin fbCenterRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+@mixin fbSpaceBetweenRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
+@mixin fbFlexEndRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
+@mixin fb( $direction, $justifyContent ) {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: $direction;
+    justify-content: $justifyContent;
+}
+@mixin noScrollBar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+@mixin borderRadius( $value ) {
+    -webkit-border-radius: $value; 
+    -moz-border-radius: $value; 
+    border-radius: $value;  
+}
+
+@mixin boxShadow( $value ) {
+    -webkit-box-shadow: $value; 
+    -moz-box-shadow: $value; 
+    box-shadow: $value;  
+}
+
+@mixin filter( $value ) {
+    -webkit-filter: $value; 
+    -moz-filter: $value; 
+    filter: $value;  
+}
+
+@mixin backdropFilter( $value ) {
+    -webkit-backdrop-filter: $value; 
+    -moz-backdrop-filter: $value; 
+-o-filter: $value;
+-ms-filter: $value;
+
+    backdrop-filter: $value;  
+}
+
+@function invert($color, $amount: 100%) {
+    $inverse: change-color($color, $hue: hue($color) + 180);
+    @return mix($inverse, $color, $amount);
+}
+
+@mixin bImage($imgpath,$position:0 0,$repeat: repeat) {
+    background: {
+        image: url($imgpath);
+        position: $position;
+        repeat: $repeat;
+    }
+}

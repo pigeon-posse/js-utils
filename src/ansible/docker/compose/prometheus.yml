@@ -1,0 +1,108 @@
+###############################################################################
+# PROMETHEUS
+###############################################################################
+# 
+# Docker hub:   https://hub.docker.com/r/prom/prometheus
+# Compose docs: https://docs.docker.com/compose/compose-file/compose-file-v3
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # PROMETHEUS
+  #############################################################################
+
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_VERSION:-latest}
+    container_name: prometheus
+    restart: always
+    user: "0"
+    ports:
+      - ${PROMETHEUS_PORT:-9090}:9090
+    volumes:
+      - VOLUMES_DIR/${PROMETHEUS_VOL_NAME:-prometheus}/config:/etc/prometheus
+      - VOLUMES_DIR/${PROMETHEUS_VOL_NAME:-prometheus}/data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      #- '--storage.tsdb.path=/prometheus'
+      #- '--web.console.libraries=/etc/prometheus/console_libraries'
+      #- '--web.console.templates=/etc/prometheus/consoles'
+      #- '--web.enable-lifecycle'
+    networks:
+      - monitoring_net
+      - private_net
+
+
+  #############################################################################
+  # PNODE EXPORTER
+  #############################################################################
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:${NODE_EXPORTER_VERSION:-latest}
+    container_name: node_exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - ${NODE_EXPORTER_VOL_DIR:-/}:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    #network_mode: host
+    #user: "0"
+    #privileged: true
+    ports:
+      - ${NODE_EXPORTER_PORT:-9100}:9100
+    networks:
+      - monitoring_net
+
+
+  #############################################################################
+  # CADVISOR
+  #############################################################################
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.45.0 # latest tag is not updated...
+                                            # https://github.com/google/cadvisor/issues/3066    
+                                            # To manual check versions: https://github.com/google/cadvisor/releases      
+    container_name: cadvisor
+    ports:
+     - "${CADVISOR_PORT:-8181}:8080"
+    # network_mode: host
+    volumes:
+      - ${CADVISOR_VOL_DIR:-/}:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    restart: always
+    networks:
+      - monitoring_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  # Net for all proxied containers
+  private_net:
+    external: true
+  # Net for monitoring conections
+  monitoring_net:
+    name : monitoring_net
+    driver: bridge
+    
+
+################################################################################  

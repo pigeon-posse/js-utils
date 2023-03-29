@@ -1,0 +1,80 @@
+###############################################################################
+# FINANCE MANAGER WITH DOCKER
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/r/fireflyiii/core
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # firefly datababase
+  #############################################################################
+  
+  firefly_db:
+    image: lscr.io/linuxserver/mariadb:${FF3_DB_VERSION:-latest}
+    container_name: firefly_db
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=${TIME_ZONE}
+      - MYSQL_ROOT_PASSWORD=$FF3_DB_ROOT_PASSWORD
+      - MYSQL_PASSWORD=$FF3_DB_PASSWORD
+      - MYSQL_DATABASE=$FF3_DB_NAME
+      - MYSQL_USER=$FF3_DB_USER
+    volumes:
+      - $VOLUMES_DIR/${FF3_VOL_NAME:-firefly}/db:/config
+    ports:
+      - ${FF3_DB_PORT:-5306}:3306
+    restart: always
+    networks:
+       - ff3_db_net
+       - private_db_net
+
+
+  #############################################################################
+  # firefly
+  #############################################################################
+
+  firefly_app:
+    container_name: firefly_app
+    image: fireflyiii/core:${FF3_VERSION:-latest}
+    restart: always
+    depends_on:
+      - firefly_db
+    links:
+      - firefly_db:db
+    volumes:
+      - $VOLUMES_DIR/${FF3_VOL_NAME:-firefly}/upload:/var/www/html/storage/upload
+    ports:
+      - ${FF3_PORT:-8333}:8080
+    env_file: .ff3.env
+    tty: true
+    networks:
+       - ff3_db_net
+       - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+  private_db_net:
+    external: true
+  ff3_db_net:
+    driver: bridge
+    name: ff3_db_net
+    
+    
+###############################################################################

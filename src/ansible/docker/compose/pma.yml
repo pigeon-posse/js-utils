@@ -1,0 +1,53 @@
+###############################################################################
+# PHP-MY-ADMIN
+###############################################################################
+# @Description: PMA for see all docker network mariadb 
+#
+# Docker hub:   https://hub.docker.com/_/phpmyadmin
+# Compose docs: https://docs.docker.com/compose/compose-file
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # PMA
+  #############################################################################
+
+  pma:
+    image: lscr.io/linuxserver/phpmyadmin:${PMA_VERSION:-latest}
+    container_name: pma
+    environment:
+      - "PUID=${PUID:-1000}"
+      - "PGID=${PUID:-1000}"
+      - "TZ=${TIME_ZONE}"
+      - PMA_ARBITRARY=1 #optional
+      #- PMA_ABSOLUTE_URI=https://phpmyadmin.example.com #optional
+    volumes:
+      - $VOLUMES_DIR/${PMA_VOL_NAME:-phpmyadmin}/config:/config
+    ports:
+      - ${PMA_PORT:-780}:80
+    restart: always
+    networks:
+      - private_net
+      - private_db_net
+      
+      
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+  private_db_net:
+    external: true
+    
+    
+################################################################################  

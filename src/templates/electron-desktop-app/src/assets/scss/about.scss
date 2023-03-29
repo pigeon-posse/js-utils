@@ -1,0 +1,14 @@
+.about {
+    .content {
+        font-size: 0.8rem;
+    }
+
+    .info {
+        @include fb( column, space-around );
+    }
+
+    .info-container {
+        background: transparent;
+        padding: 0;
+    }
+}

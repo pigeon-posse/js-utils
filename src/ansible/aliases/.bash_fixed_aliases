@@ -1,0 +1,55 @@
+###############################################################################
+# ANSIBLE ALIASES LIST 
+###############################################################################
+# @description: Aliases file generated with ansible.
+#               Don't edit this file, because is posible regenerated.
+###############################################################################
+
+
+# BASH
+alias bash-v="cats ~/.bashrc"
+alias bash-r="source ~/.bashrc"
+
+# ZSH
+alias zsh-v="cats ~/.zshrc"
+alias zsh-r="source ~/.zshrc"
+
+# MOTD (MESSAGE OF THE DAY)
+alias motd-view="cat /etc/motd"
+alias motd-edit="nano /etc/motd"
+alias motd-v="motd-view"
+alias motd-e="motd-edit"
+
+# ALIAS
+alias alias-view="cats ~/.bash_aliases"
+alias alias-refresh="source ~/.bash_aliases"
+alias alias-edit="nano ~/.bash_aliases"
+alias alias-v="alias-view"
+alias alias-r="alias-refresh"
+alias alias-e="alias-edit"
+alias f-alias-v="cats ~/.bash_fixed_aliases"
+alias f-alias-r="source ~/.bash_fixed_aliases"
+alias f-alias-e="nano ~/.bash_fixed_aliases"
+
+## DIRS
+alias cats='highlight -O ansi --force'
+alias rall='_rall() { rm -r $1 && lsa }; _rall'
+alias lsa="exa --all --all --header --group --long --icons"
+alias trees="exa --all --icons --tree"
+alias trees-n='_t_n() { exa --all --icons --tree --level=$1 $2}; _t_n'
+
+# DEVICES
+alias dev-l='lsblk -a'
+
+# SERVICES
+alias service-l='service --status-all'
+alias service-start='sudo systemctl start'
+alias service-stop='sudo systemctl stop'
+
+
+# IP
+alias public-ip="curl ifconfig.me && echo ''"
+alias hosts="hostname -I"
+
+
+###############################################################################

@@ -1,0 +1,83 @@
+@keyframes popupBG {
+    0% {
+        display: initial;
+        backdrop-filter: blur(0);
+        -webkit-backdrop-filter: blur(0);
+    }
+
+    100% {
+        display: none;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+    }
+}
+
+@keyframes popupCenter {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes popupTop {
+    0% {
+        top: -100%;
+    }
+
+    50% {
+        top: -100%;
+    }
+
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes popupBottom {
+    0% {
+        bottom: -100%;
+    }
+
+    50% {
+        bottom: -100%;
+    }
+
+    100% {
+        bottom: 0;
+    }
+}
+
+@keyframes popupRight {
+    0% {
+        right: -100%;
+    }
+
+    50% {
+        right: -100%;
+    }
+
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes popupLeft {
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        left: -100%;
+    }
+
+    100% {
+        left: 0;
+    }
+}

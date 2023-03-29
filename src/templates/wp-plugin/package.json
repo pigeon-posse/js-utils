@@ -1,0 +1,40 @@
+{
+	"private": true,
+	"name": "{{pp_template_name}}",
+	"version": "1.0.0",
+	"main": "plugin/{{pp_template_name}}.php",
+	"engines": {
+		"node": "^12.17.0 || ^14.13 || >=16.0.0",
+		"pnpm": ">=3"
+	},
+	"packageManager": "pnpm@7.26.0",
+	"scripts": {
+		"start": "composer install && pnpm i",
+		"update": "pnpm up && composer update",
+		"plugin-readme": "node .utils/plugin-readme.js",
+		"plugin-file": "node .utils/plugin-info.js",
+		"dev": "pnpm plugin-file && pnpm dev-composer && run-s dev:**",
+		"dev:docker": "docker-compose up -d --remove-orphans",
+		"dev:text": "node .utils/docker-env.mjs --start-text",
+		"dev-composer": "composer run-script setup",
+		"dev-stop": "docker-compose down --volumes",
+		"dev-logs": "docker-compose logs",
+		"build": "pnpm plugin-readme && pnpm plugin-file && run-s build:**",
+		"build:composer": "composer install --no-dev",
+		"build:zip": "node .utils/zip.js",
+		"release": "node .utils/release.mjs",
+		"watch": "pnpm build && run-s dev:**",
+		"pot": "composer run-script pot",
+		"php-error": "composer run-script error",
+		"php-fix": "composer run-script fix"
+	},
+	"devDependencies": {
+		"archiver": "^5.3.1",
+		"auto-changelog": "^2.4.0",
+		"chalk": "^5.2.0",
+		"dotenv": "^16.0.3",
+		"inquirer": "^9.1.4",
+		"npm-run-all": "^4.1.5",
+		"release-it": "^15.8.0"
+	}
+}

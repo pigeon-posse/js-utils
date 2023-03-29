@@ -1,0 +1,43 @@
+###############################################################################
+# FOCALBOARD
+###############################################################################
+# @description  APP FOR NOTES BOARD
+#
+# Docker hub:   https://hub.docker.com/r/mattermost/focalboard
+# Compose docs: https://docs.docker.com/compose/compose-file/compose-file-v3/
+###############################################################################
+
+version: "3.8"
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # focalboard
+  #############################################################################
+
+    focalboard:
+      container_name: focalboard
+      image: mattermost/focalboard:${FOCALBOARD_VERSION:-latest}
+      restart: always
+      volumes:
+        - $VOLUMES_DIR/${FOCALBOARD_VOL_NAME:-focalboard}/data:/opt/focalboard/data
+      ports:
+        - ${FOCALBOARD_PORT:-1330}:8000
+      networks:
+        - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+    
+
+###############################################################################

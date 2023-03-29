@@ -1,0 +1,44 @@
+###############################################################################
+# NGINX PROXY MANAGER SET CONFIG
+###############################################################################
+
+
+---
+
+
+- name: "Set config in nginx proxy manager"
+  hosts: all
+  become: true
+  vars_files:
+    - ../variables.yml
+  tasks:
+
+    - name: "Register 24h token"
+      uri:
+        url: "{{nginx_pm.host}}/api/tokens"
+        user: "{{nginx_pm.user}}"
+        password: "{{nginx_pm.password}}"
+        method: POST
+        body_format: json
+        status_code: [200, 202]
+        body: 
+          identity: "{{nginx_pm.user}}"
+          secret: "{{nginx_pm.password}}"
+        # status_code: 302
+      register: access
+
+    - name: "Add proxy hosts"
+      uri:
+        url: "{{nginx_pm.host}}/api/nginx/proxy-hosts"
+        method: POST
+        body_format: json
+        body: "{{ nginx_pm.hosts_default | combine(item) }}"
+        headers:
+          'Authorization': "Bearer {{access.json.token}}"
+          'Accept': "application/json"
+          'Content-Type': "application/json"
+          'Content-Length': "{{ nginx_pm.hosts_default | combine(item) | to_json | length }}"
+      loop: "{{ nginx_pm.hosts }}"
+
+
+###############################################################################

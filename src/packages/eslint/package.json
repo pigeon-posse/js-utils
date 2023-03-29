@@ -1,0 +1,66 @@
+{
+	"name": "@pigeon-dev/eslint-config",
+	"version": "1.1.0",
+	"description": "PigeonPosse Eslint configuration",
+	"main": "src/index.js",
+	"scripts": {
+	    "lint": "eslint . --ext .js",
+	    "lint-fix": "eslint . --fix",
+	    "test": "node test/config"
+	},
+	"peerDependencies": {
+		"eslint": ">= 8",
+		"eslint-plugin-align-assignments": ">= 1",
+		"eslint-plugin-align-import": ">= 1",
+		"eslint-plugin-html": "^7.1.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jsdoc": "^39.3.6",
+		"eslint-plugin-json": "^3.1.0",
+		"eslint-plugin-promise": ">= 6"
+	},
+	"devDependencies": {
+		"eslint": ">= 8",
+		"eslint-plugin-align-assignments": ">= 1",
+		"eslint-plugin-align-import": ">= 1",
+		"eslint-plugin-html": "^7.1.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jsdoc": "^39.3.6",
+		"eslint-plugin-json": "^3.1.0",
+		"eslint-plugin-promise": ">= 6",
+		"jest": "^29.3.1"
+	},
+	"dependencies": {
+		"@pigeon-posse/pkg-extended-scripts": "^0.1.0"
+	},
+	"keywords": [
+		"linter",
+		"eslint",
+		"eslint-config",
+		"js",
+		"es",
+		"setup",
+		"config",
+		"pigeonposse"
+	],
+	"author": {
+		"name": "Angelo",
+		"email": "angelo@pigeonposse.com",
+		"url": "https://pigeonposse.com"
+	},
+	"license": {
+		"type": "GPL-3.0",
+		"url": "https://github.com/pigeonposse/pigeon-dev/src/packages/eslint/LICENSE"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://pigeonposse.com/?popup=donate"
+	},
+	"homepage": "https://github.com/PigeonPosse/pigeon-dev/src/packages/eslint",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PigeonPosse/pigeon-dev/src/packages/eslint"
+	},
+	"bugs": {
+		"url": "https://github.com/PigeonPosse/eslint-config/issues"
+	}
+}

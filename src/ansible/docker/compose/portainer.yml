@@ -1,0 +1,48 @@
+###############################################################################
+# PORTAINER
+###############################################################################
+# 
+# Docker hub:   https://hub.docker.com/r/portainer/portainer
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # PORTAINER
+  #############################################################################
+
+  portainer:
+    image: portainer/portainer-ce:${PORTAINER_VERSION:-latest}
+    container_name: portainer
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $VOLUMES_DIR/${PORTAINER_VOL_NAME:-portainer}/data:/data
+    ports:
+      - ${PORTAINER_PORT:-9130}:9000
+    networks:
+      - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    name: private_net
+    external: true
+
+
+###############################################################################

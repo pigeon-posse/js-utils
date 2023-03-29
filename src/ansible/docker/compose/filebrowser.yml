@@ -1,0 +1,50 @@
+###############################################################################
+# FILEBROWSER
+###############################################################################
+# FOR VIEW SERVER DIRS IN A BROWSER
+#
+# Docker hub:   https://hub.docker.com/r/filebrowser/filebrowser
+# Compose docs: https://docs.docker.com/compose/compose-file/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+
+  #############################################################################
+  # filebrowser
+  #############################################################################
+  filebrowser:
+    image: hurlenko/filebrowser:${FILEBROWSER_VERSION:-latest}
+    container_name: filebrowser
+    restart: always
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID   
+      - TZ=$TIME_ZONE 
+      #- FB_BASEURL=/filebrowser
+    volumes:
+      - ${FILEBROWSER_DATA_DIR}:/data
+      - $VOLUMES_DIR/${FILEBROWSER_VOL_NAME:-filebrowser}/config:/config
+    ports:
+      - ${FILEBROWSER_PORT:-8744}:8080
+    networks:
+      - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+    
+
+###############################################################################

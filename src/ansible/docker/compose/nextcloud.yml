@@ -1,0 +1,84 @@
+###############################################################################
+# NEXTCLOUD WITH DOCKER COMPOSE
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:          
+
+
+  #############################################################################
+  # database
+  #############################################################################
+
+  nextcloud_db:
+    image: lscr.io/linuxserver/mariadb:${NEXTCLOUD_DB_VERSION:-latest}
+    container_name: nextcloud_db
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=${TIME_ZONE}
+      - MYSQL_ROOT_PASSWORD=$NEXTCLOUD_DB_ROOT_PASSWORD
+      - MYSQL_PASSWORD=$NEXTCLOUD_DB_PASSWORD
+      - MYSQL_DATABASE=$NEXTCLOUD_DB_NAME
+      - MYSQL_USER=$NEXTCLOUD_DB_USER
+    volumes:
+      - $VOLUMES_DIR/${NEXTCLOUD_VOL_NAME:-nextcloud}/db:/config
+    ports:
+      - ${NEXTCLOUD_DB_PORT:-7306}:3306
+    restart: always
+    networks:
+       - nc_db_net
+       - private_db_net
+
+
+  #############################################################################
+  # NEXCLOUD
+  #############################################################################
+
+  nextcloud_app:
+    image: nextcloud:${NEXTCLOUD_VERSION:-latest}
+    restart: always
+    container_name: nextcloud_app
+    ports:
+      - ${NEXTCLOUD_PORT:-8088}:80
+    links:
+      - nextcloud_db:db
+    depends_on:
+      - nextcloud_db
+    volumes:
+      - $VOLUMES_DIR/${NEXTCLOUD_VOL_NAME:-nextcloud}/apps:/var/www/html/apps
+      - $VOLUMES_DIR/${NEXTCLOUD_VOL_NAME:-nextcloud}/config:/var/www/html/config
+      - ${NEXTCLOUD_DATA_DIR}:/var/www/html/data
+    # environment:
+    #   - MYSQL_PASSWORD=$NEXTCLOUD_DB_PASSWORD
+    #   - MYSQL_DATABASE=$NEXTCLOUD_DB_NAME
+    #   - MYSQL_USER=$NEXTCLOUD_DB_USER
+    #   - MYSQL_HOST=db
+    sysctls:
+      - net.ipv4.ip_unprivileged_port_start=0
+    networks:
+       - nc_db_net
+       - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+  private_db_net:
+    external: true
+  nc_db_net:
+    driver: bridge
+    name: nc_db_net
+    
+    
+################################################################################  

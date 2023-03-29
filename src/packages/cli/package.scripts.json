@@ -1,0 +1,6 @@
+{
+	"hello" : "echo 'Hello pigeon 🐦🌈'",
+    "lint": "eslint . --ext .js",
+    "lint-fix": "eslint . --fix",
+    "test": "node test/config"
+}

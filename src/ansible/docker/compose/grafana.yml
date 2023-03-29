@@ -1,0 +1,50 @@
+###############################################################################
+# GRAFANA
+###############################################################################
+# @description  APP FOR VIEW MONTORING GRAPHICS
+#
+# Docker hub:   https://hub.docker.com/r/grafana/grafana
+# Compose docs: https://docs.docker.com/compose/compose-file/compose-file-v3/
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+  #############################################################################
+  # GRAFANA
+  #############################################################################
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION:-latest}
+    container_name: grafana
+    restart: always
+    user: root
+    pid: "host"
+    privileged: true
+    #ports:
+    #  - 7988:3000
+    volumes:
+      - $VOLUMES_DIR/${GRAFANA_VOL_NAME:-grafana}/data:/var/lib/grafana
+    networks:
+      - private_net
+
+
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  # Net for all proxied containers
+  private_net:
+    external: true
+  # Net for monitoring sotware
+  monitoring_net:
+    external: true
+
+
+################################################################################  

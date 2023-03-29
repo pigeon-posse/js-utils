@@ -1,0 +1,27 @@
+###############################################################################
+# Change docker root directory 
+###############################################################################
+# 
+# Use: when you want to store the containers and images on an external hard drive
+###############################################################################
+
+
+---
+
+- name: "Add default in your homepage builded (https://gethomepage.dev/)"
+  hosts: all
+  become: true
+  vars_files:
+    - ../variables.yml
+  tasks:
+
+    - name: "Create each file"
+      copy:
+        owner: "{{ homepage.user }}"
+        group: "{{ homepage.group }}"
+        dest: "{{ homepage.path }}/{{ item.name }}.yml"
+        content: "{{ item.content }}"
+      loop: "{{ homepage.pages }}"
+
+
+###############################################################################

@@ -1,0 +1,70 @@
+{
+	"name": "pigeonposse/{{pp_template_name}}",
+	"type": "library",
+	"description": "{{pp_template_description}}",
+	"require-dev": {
+		"phpunit/phpunit": "^6",
+		"squizlabs/php_codesniffer": "3.*",
+		"wp-coding-standards/wpcs": "*",
+		"wp-cli/wp-cli": "^2.7"
+	},
+	"config": {
+		"vendor-dir": "plugin/vendor"
+	},
+	"scripts": {
+		"setup": [
+			"phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
+			"phpcs --config-set default_standard WordPress"
+		],
+		"pot": "wp i18n make-pot . plugin/src/lang/{{pp_template_name}}.pot",
+		"error": "phpcs --extensions=php",
+		"fix": "phpcbf --extensions=php"
+	},
+	"license": "GPL-3.0-only",
+	"keywords": [
+		"wp",
+		"wp-plugin",
+		"wordpress-plugin",
+		"plugin",
+		"pigeonposse"
+	],
+	"authors": [
+		{
+			"name": "{{pp_author}}",
+			"email": "{{pp_author_mail}}",
+			"url": "{{pp_author_url}}",
+			"role": "Developer"
+		},
+		{
+			"name": "PigeonPosse Team",
+			"email": "dev@pigeonposse.com",
+			"homepage": "https://pigeonposse.com",
+			"role": "Collective"
+		}
+	],
+	"funding": [
+		{
+			"type": "GitHub",
+			"url": "https://github.com/sponsors/PigeonPosse"
+		},
+		{
+			"type": "Web",
+			"url": "https://pigeonposse.com/?popup=donate"
+		}
+	],
+	"homepage": "https://github.com/pigeonposse/{{pp_template_name}}",
+	"repositories": {
+		"github": {
+			"type": "git",
+			"url": "https://github.com/pigeonposse/{{pp_template_name}}"
+		}
+	},
+	"extra": {
+		"pluginName": "{{pp_template_plugin_name}}",
+		"namespace": "{{pp_template_plugin_namespace}}",
+		"textDomain": "{{pp_template_plugin_text_domain}}",
+		"pluginFile": "plugin/{{pp_template_name}}.php",
+		"description": "{{pp_template_description}}",
+		"pluginReadMe": "plugin/readme.txt"
+	}
+}

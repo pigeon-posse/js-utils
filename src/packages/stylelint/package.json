@@ -1,0 +1,43 @@
+{
+	"name": "@pigeonposse/stylelint-config",
+	"version": "1.0.1",
+	"description": "PigeonPosse Stylelint configuration",
+	"main": "index.js",
+	"scripts": {
+		"test": ""
+	},
+	"peerDependencies": {
+		"stylelint": ">= 14"
+	},
+	"keywords": [
+		"linter",
+		"css",
+		"scss",
+		"sass",
+		"stylelint",
+		"setup",
+		"config",
+		"pigeonposse"
+	],
+	"author": {
+		"name": "Angelo",
+		"email": "angelo@pigeonposse.com",
+		"url": "https://pigeonposse.com"
+	},
+	"license": {
+		"type": "GPL-3.0",
+		"url": "https://github.com/pigeonposse/pigeon-dev/src/linters/stylelint/LICENSE"
+	},
+	"funding": {
+		"type": "individual",
+		"url": "https://pigeonposse.com/?popup=donate"
+	},
+	"homepage": "https://github.com/PigeonPosse/pigeon-dev/src/linters/stylelint",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PigeonPosse/pigeon-dev/src/linters/stylelint"
+	},
+	"bugs": {
+		"url": "https://github.com/PigeonPosse/pigeon-dev/src/linters/stylelint/issues"
+	}
+}

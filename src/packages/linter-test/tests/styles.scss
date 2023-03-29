@@ -1,0 +1,175 @@
+// BTN STYLES
+[data-type="btn"][data-subtype="filter"],
+[data-type="btn"][data-subtype="color-picker"] {
+    color: $text-color !important;
+}
+
+[data-subtype="filter"].active {
+    background: $text-color !important;
+    color: $bg-color !important;
+    box-shadow: $btn-shadow;
+}
+
+.content {
+    a {
+        color: pink;
+    }
+
+    & > .pp-s8-section {
+        width: 100%;
+        height: calc(100vh - 350px);
+        margin: 50px 0 300px 0;
+
+        @include fb(column, center);
+    }
+
+    & > .pp-s8-section[data-id="filters-section"] {
+        align-items: flex-start;
+    }
+}
+
+[data-id="insert-section"] {
+    .pp-s8-section-content {
+        @include fb(column, center);
+
+        [data-id="insert-title"] {
+            @include fb(column, center);
+
+            .pp-s8-title {
+                @include fb(column, center);
+
+                .pp-s8-name {
+                    text-transform: uppercase;
+                    font-weight: 900;
+                    font-size: 3rem;
+                    color: $main-color;
+                }
+
+                .pp-s8-desc {
+                    pointer-events: none;
+
+                    .pp-s8-desc-btn {
+                        display: none;
+                    }
+
+                    .pp-s8-desc-content {
+                        position: relative;
+                        font-style: italic;
+
+                        @include fb(row, center);
+                    }
+                }
+            }
+        }
+
+        & > .pp-s8-btn {
+            margin: 40px 0;
+            padding: 10px 40px;
+            background: $main-color;
+
+            @include boxShadow($btn-shadow-2);
+
+            &:hover {
+                @include boxShadow($btn-shadow-2);
+            }
+        }
+
+        [data-id="insert-popup"] {
+            //display: none !important;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            backdrop-filter: blur(15px);
+
+            @include fb(column, center);
+
+            & > .pp-s8-row-content {
+                padding: 20px;
+                background: $bg-color;
+
+                @include borderRadius(20px);
+                @include fb(column, center);
+
+                textarea {
+                    height: 200px !important;
+                    width: 400px !important;
+                    max-width: 400px !important;
+                }
+
+                .textarea-error {
+                    font-size: 0.8rem;
+                    width: 400px !important;
+                    max-width: 400px !important;
+                    padding: 10px 20px;
+                    background: $bg-color-2;
+                    border-left: 10px solid #f44336;
+
+                    @include borderRadius(10px);
+                }
+
+                .pp-s8-btn {
+                    text-align: center;
+                    width: 100%;
+                    margin: 10px 0 0 0;
+
+                    &:hover {
+                        @include boxShadow($btn-shadow);
+                    }
+                }
+            }
+        }
+    }
+}
+
+[data-id="filters-section"] {
+    & > .pp-s8-title {
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 3rem;
+        color: $main-color;
+    }
+
+    & > .pp-s8-section-content {
+        @include fb(row, center);
+
+        & > .pp-s8-row {
+            margin: 10px;
+        }
+    }
+
+    [data-id="iframe-preview"] {
+        iframe {
+            @include boxShadow($shadow);
+        }
+
+        textarea {
+            height: 100px !important;
+            width: calc(100% - 20px) !important;
+            min-width: 100%;
+
+            @include boxShadow($shadow);
+        }
+
+        .pp-s8-btn {
+            width: max-content;
+            margin: 10px;
+            float: right;
+
+            @include boxShadow($btn-shadow);
+            @include fb(row, flex-end);
+
+            &[data-id="iframe-copy"] {
+                background: $main-color;
+
+                @include boxShadow($btn-shadow-2);
+            }
+        }
+    }
+}
+
+[data-id="tab-presets-user"] {
+    display: none;
+}

@@ -1,0 +1,50 @@
+###############################################################################
+# NGINX PROXY MANAGER
+###############################################################################
+#
+# Docker hub:   https://hub.docker.com/_/phpmyadmin
+# Compose docs: https://docs.docker.com/compose/compose-file
+###############################################################################
+
+version: "3.8"
+
+
+###############################################################################
+# SERVICES
+###############################################################################
+
+services:
+
+
+  #############################################################################
+  # REVERSE PROXY
+  #############################################################################
+
+  npm-app:
+    image: jc21/nginx-proxy-manager:${NGINX_PM_VERSION:-latest}
+    container_name: nginx-pm
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - ${NGINX_PM_PORT:-81}:81
+    environment:
+      DISABLE_IPV6: ${NGINX_PM_DISABLE_IPV6:-'true'}
+    volumes:
+      - $VOLUMES_DIR/${NGINX_PM_VOL_NAME:-nginx-pm}/data:/data
+      - $VOLUMES_DIR/${NGINX_PM_VOL_NAME:-nginx-pm}/letsencrypt:/etc/letsencrypt
+    networks:
+      - private_net
+      
+###############################################################################
+# NETWORK
+###############################################################################
+
+networks:
+  private_net:
+    external: true
+  private_db_net:
+    external: true
+    
+    
+################################################################################  

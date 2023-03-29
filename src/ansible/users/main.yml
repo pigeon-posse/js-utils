@@ -1,0 +1,30 @@
+###############################################################################
+# USERS
+###############################################################################
+
+---
+
+
+- name: Add users to ansible groups
+  become: yes
+  become_user: root
+  vars_files:
+    - ../variables.yml
+  hosts: all
+  tasks:
+
+    - name: Ensure group "{{ ansible_groups }}" exists
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ ansible_groups }}"
+
+    - name: "Adding existing users {{ ansible_users }} to groups {{ ansible_groups }}"  
+      user:
+        name:  "{{ item }}"
+        groups: "{{ ansible_groups }}"
+        append: yes
+      with_items: "{{ ansible_users }}"
+
+
+###############################################################################

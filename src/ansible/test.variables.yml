@@ -1,0 +1,253 @@
+###############################################################################
+# Variables 
+###############################################################################
+
+---
+
+###############################################################################
+# Extra packages to install
+###############################################################################
+
+extra_pkgs:
+  - exa
+  - highlight
+  - fastfetch
+
+###############################################################################
+# groups of ansible users
+###############################################################################
+
+ansible_users:
+  - pigeon
+  - root
+ansible_groups:
+  - sudo
+  - adm
+  - pigeon
+
+
+###############################################################################
+# docker installation
+###############################################################################
+
+os: linux/ubuntu
+dist: kinetic
+arch: linux-aarch64
+docker_compose_version: v2.15.1
+
+
+###############################################################################
+# docker
+###############################################################################
+
+# This must be the current docker directory
+# check your actual docker root dir with: docker info | grep Docker
+docker_daemon_old_path: /var/lib/docker
+# If you change the directory with ansible, 
+# here you have to put the directory that you want it to be
+docker_daemon_path: /your/custom/docker/root
+# docker volumes dir
+docker_volumes_dir: /path/to/docker/volumes
+# docker compose directory
+docker_compose_dir: /path/to/docker/compose
+
+
+###############################################################################
+# Cloudflare
+###############################################################################
+
+cloudflare_account_api_key: yourKeyyourKeyyourKeyyourKey
+cloudflare_account_email: your@email.com
+cloudflare_dns:
+  - zone: "example.com"
+    record: "local"
+    type: A
+    value:  '' # public ip of your host
+    proxied: false
+  - zone: "example2.com"
+    record: "local"
+    type: A
+    value:  '' # public ip of your host
+    proxied: false
+
+
+###############################################################################
+# HOME PAGE 
+# Docs: https://gethomepage.dev/
+###############################################################################
+
+homepage: 
+  user: root
+  group: root
+  path : /path/to/docker/volumes/homepage/config
+  pages:
+    - name: settings
+      content: |
+        title: 🏠🐦 | pigeonposse.com
+        favicon: https://avatars.githubusercontent.com/u/98131003
+        theme: dark
+        color: neutral
+        language: es
+
+    - name: widgets
+      content: |
+        - logo:
+             icon: https://avatars.githubusercontent.com/u/98131003
+        - resources:
+            cpu: true
+            memory: true
+            expanded: true
+        - search:
+            provider: google
+            target: _blank
+        - datetime:
+            text_size: xl
+            format:
+              dateStyle: short
+              timeStyle: short
+              hour12: false
+        - openmeteo:
+            #label: Valencia # optional
+            #latitude: -0,38
+            #longitude: 39,47
+            timezone: Europe/Madrid # optional
+            units: metric # or imperial
+            cache: 5 # Time in minutes to cache API responses, to stay within limits
+
+    - name: bookmarks
+      content: |
+        - Developer:
+          - Github:
+            - abbr: GH
+              href: https://github.com/pigeonposse
+          - NPM:
+            - abbr: NP
+              href: https://www.npmjs.com/~pigeonposse
+          - Packagist:
+            - abbr: PG
+              href: https://packagist.org/users/PigeonPosse/
+          - WordPress:
+            - abbr: WP
+              href: https://profiles.wordpress.org/pigeonposse/
+        - Social:
+          - Reddit:
+            - abbr: RE
+              href: https://www.reddit.com/user/PigeonPosseTeam
+            - Instagram:
+              - abbr: IN
+                href: https://www.instagram.com/pigeon.posse/
+            - Twitter:
+              - abbr: IN
+                href: https://twitter.com/pigeonposse_
+
+    - name: services
+      content: |
+        - Server Apps:
+          - ☁️ Test web:
+            href: https://test.example.com
+
+###############################################################################
+# NGINX PROXY MANAGER 
+# Docs: https://github.com/NginxProxyManager/nginx-proxy-manager
+###############################################################################
+
+nginx_pm:
+  host: https://nginx.test.example.com
+  user: test@example.com
+  password: yourpassword
+ 
+  # https://github.com/NginxProxyManager/nginx-proxy-manager/blob/develop/backend/schema/
+  hosts_default:
+    domain_names:
+      - ''
+    forward_host: ''
+    forward_port: ''
+    access_list_id: 0
+    certificate_id: 1
+    ssl_forced: 1
+    caching_enabled: 0
+    block_exploits: 0
+    # advanced_config: ''
+    meta:
+      letsencrypt_agree: false
+      dns_challenge: false
+      nginx_online: true
+      nginx_err: null
+    allow_websocket_upgrade: 0
+    http2_support: 1
+    forward_scheme: http
+    enabled: 1
+    locations: []
+    hsts_enabled: 1
+    hsts_subdomains: 0
+
+  hosts:
+    # - domain_names:
+    #     - cloud.test.example.com
+    #   forward_host: nextcloud_app
+    #   forward_port: 80
+    #   advanced_config: |
+    #     location /.well-known/carddav {
+    #         return 301 $scheme://$host/remote.php/dav;
+    #     }
+
+    #     location /.well-known/caldav {
+    #         return 301 $scheme://$host/remote.php/dav;
+    #     }
+    # - domain_names:
+    #     - db.test.example.com
+    #   forward_host: pma
+    #   forward_port: 80
+    # - domain_names:
+    #     - firefly.test.example.com
+    #   forward_host: firefly_app
+    #   forward_port: 8080
+    # - domain_names:
+    #     - home.test.example.com
+    #   forward_host: home
+    #   forward_port: 3000
+    # - domain_names:
+    #     - n8n.test.example.com
+    #   forward_host: n8n
+    #   forward_port: 5678
+    # - domain_names:
+    #     - papermerge.test.example.com
+    #   forward_host: paperm
+    #   forward_port: 8000
+    # - domain_names:
+    #     - pass.test.example.com
+    #   forward_host: vaultwarden
+    #   forward_port: 80
+    # - domain_names:
+    #     - portainer.test.example.com
+    #   forward_host: portainer
+    #   forward_port: 9000
+    # - domain_names:
+    #     - proxy.test.example.com
+    #   forward_host: nginx-pm
+    #   forward_port: 81
+    # - domain_names:
+    #     - server.test.example.com
+    #   forward_host: filebrowser
+    #   forward_port: 8080
+    - domain_names:
+        - vpn.test.example.com
+      forward_host: wg-easy
+      forward_port: 51821
+
+  certificates:
+    - provider: letsencrypt
+      nice_name: '*.test.example.com, test.example.com'
+      domain_names:
+        - '*.test.example.com'
+        - 'test.example.com'
+      meta:
+        letsencrypt_email: 'test@example.com'
+        dns_challenge: true
+        dns_provider: 'cloudflare'
+        dns_provider_credentials: '# Cloudflare API token\ndns_cloudflare_api_token = yourToken'
+        letsencrypt_agree: true
+
+
+###############################################################################
+###############################################################################
