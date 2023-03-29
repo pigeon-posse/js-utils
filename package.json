@@ -1,10 +1,10 @@
 {
-  	"name": "pigeon-dev",
-  	"version": "1.0.0",
-  	"description": "",
-  	"type": "module",
+	"name": "pigeon-dev",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
 	"private": true,
-	"workspaces" : [ 
+	"workspaces": [
 		"src/packages/*"
 	],
 	"engines": {
@@ -14,6 +14,7 @@
 	"scripts": {
 		"start": "pnpm i",
 		"scripts": "pnpm pes",
+		"release": "node .utils/release-it.js && node .utils/release.js",
 		"dev": "pnpm eslint && pnpm htmlhint && pnpm stylelint",
 		"dev-eslint": "pnpm --filter eslint dev",
 		"dev-htmlhint": "pnpm --filter htmlhint dev",
@@ -24,6 +25,8 @@
 		"@pigeon-posse/htmlhint-config": "^1.1.3",
 		"@pigeon-posse/pkg-extended-scripts": "^0.2.0",
 		"@pigeon-posse/stylelint-config": "^1.0.1",
+		"@release-it/bumper": "^4.0.2",
+		"auto-changelog": "^2.4.0",
 		"eslint": "^8.32.0",
 		"eslint-plugin-align-assignments": "^1.1.2",
 		"eslint-plugin-align-import": "^1.0.0",
@@ -32,6 +35,8 @@
 		"eslint-plugin-jsdoc": "^39.6.6",
 		"eslint-plugin-json": "^3.1.0",
 		"eslint-plugin-promise": "^6.1.1",
+		"inquirer": "^9.1.5",
+		"release-it": "^15.9.3",
 		"rimraf": "^3.0.2",
 		"stylelint": "^14.16.1"
 	},
@@ -46,8 +51,7 @@
 		"pigeonposse",
 		"bash"
 	],
-	"customProjectInfo": {
-	},
+	"customProjectInfo": {},
 	"bugs": {
 		"url": "https://github.com/pigeonposse/pigeon-dev/issues",
 		"email": "dev@pigeonposse.com"

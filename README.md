@@ -66,8 +66,8 @@ FOR PIGEONPOSSE.COM
 
 You can contribute via **_Github_**.
 
-[![Issues](https://img.shields.io/badge/Issues-grey?style=flat-square)](https://github.com/pigeonposse/banda/issues)
-[![Pull requests](https://img.shields.io/badge/Pulls-grey?style=flat-square)](https://github.com/pigeonposse/banda/pulls)
+[![Issues](https://img.shields.io/badge/Issues-grey?style=flat-square)](https://github.com/pigeonposse/pigeon-dev/issues)
+[![Pull requests](https://img.shields.io/badge/Pulls-grey?style=flat-square)](https://github.com/pigeonposse/pigeon-dev/pulls)
 
 ## ☕ Donate
 
