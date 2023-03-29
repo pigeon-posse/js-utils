@@ -5,7 +5,7 @@
     },
     "hooks": {
         "before:init": [
-            "git push"
+            "git push -u origin main"
         ],
         "after:bump": "pnpm auto-changelog -p",
         "after:git:release": "echo 'After git push, before github release'",

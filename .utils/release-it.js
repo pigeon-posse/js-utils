@@ -21,7 +21,7 @@ const data          = {
 	},
 	'hooks' : {
 		'before:init' : [ 
-			'git push', 
+			'git push -u origin main', 
 			// 'pnpm lint-fix', 
 			// 'pnpm build', 
 		],
