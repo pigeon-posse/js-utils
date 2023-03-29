@@ -1,7 +1,7 @@
 {
 	"name": "pigeon-dev",
 	"version": "1.0.0",
-	"description": "",
+	"description": "✨ Utilities for faster and more agile development by PIGEONPOSSE™",
 	"type": "module",
 	"private": true,
 	"workspaces": [

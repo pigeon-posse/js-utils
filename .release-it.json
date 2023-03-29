@@ -10,7 +10,7 @@
         "after:bump": "pnpm auto-changelog -p",
         "after:git:release": "echo 'After git push, before github release'",
         "after:release": [
-            "gh repo edit https://github.com/pigeonposse/pigeon-dev -d \"\"",
+            "gh repo edit https://github.com/pigeonposse/pigeon-dev -d \"✨ Utilities for faster and more agile development by PIGEONPOSSE™\"",
             "gh repo edit https://github.com/pigeonposse/pigeon-dev --add-topic dev-utils,dev-enviroment,pigeon-dev,ansible,linters,mono-repository,cli,pigeonposse,bash",
             "echo 'Github action is now releasing: pigeon-dev v1.0.0 to https://github.com/pigeonposse/pigeon-dev.\n Check if all is ok 🌈🤖\n https://github.com/pigeonposse/pigeon-dev/actions'"
         ]
