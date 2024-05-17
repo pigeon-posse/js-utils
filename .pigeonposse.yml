@@ -6,7 +6,9 @@ web:
   
   - id: "{{package.name}}"
     name: Pigeon Development
-    type: dev
+    type: 
+      - libary
+      - utils
     version: "{{package.version}}"
     description: "{{package.description}}"
     homepage: "{{package.homepage}}"
